@@ -1,3 +1,10 @@
 extends layout
 block content
-  div.
+  div(ng-controller="QuestionsController").row
+    div.col-sm-8
+      h3 Questions
+      div(ng-repeat="question in questions| orderBy:'-createdAt'")
+        div
+          a(href="/questions/{{ question.$id }}") {{ question.title }}
+          div.pull-right {{ question.createdAt | date:'medium' }} {{question.author}}
+        hr

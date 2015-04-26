@@ -9,6 +9,10 @@ app
       return $firebaseAuth(ref);
     }
   ])
+  .controller('QuestionsController', function($scope, $firebaseArray){
+    var query = questionsRef.orderByChild('createdAt').limitToLast(25);
+    $scope.questions = $firebaseArray(query);
+  })
   .controller('NewQuestion', function($scope, $window, Auth, $firebaseArray){
     $scope.languages = [{name:'javascript'}];
 
