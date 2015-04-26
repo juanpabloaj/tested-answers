@@ -1,0 +1,4 @@
+div(ng-show="authData")
+  button(ng-click="auth.$unauth()") Logout {{ authData.github.username }}
+div(ng-hide="authData")
+  button(ng-click="auth.$authWithOAuthPopup('github')") Login with github

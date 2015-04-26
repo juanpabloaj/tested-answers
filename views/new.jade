@@ -1,8 +1,9 @@
 extends layout
 block content
-  div.row
+  div(ng-controller="NewQuestion").row
+    include Login.jade
     div.col-sm-8
-      form(ng-submit="submitQuestion()", ng-controller="NewQuestion")
+      form(ng-submit="submitQuestion()")
         h3 Question
         textarea(rows="1",placeholder="Question title", ng-model="newQuestion.title").form-control
         textarea(rows="3",placeholder="Question description", ng-model="newQuestion.body").form-control
@@ -16,4 +17,9 @@ block content
             Language:
           div.col-sm-3
             select(ng-model="newQuestion.language", ng-options="lang.name for lang in languages").form-control
-          button(type='submit').pull-right New Question
+          div.pull-right
+            div(ng-show='authData')
+              button(type='submit') New Question
+            div(ng-hide='authData')
+              button(ng-click="auth.$authWithOAuthPopup('github')").
+                Login with github to add a New Question

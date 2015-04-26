@@ -1,8 +1,9 @@
 extends layout
 block content
-  div.row
+  div(ng-controller="AnswerController").row
+    include ./login.jade
     input(type="hidden", value="#{question}")#questionId
-    div(ng-controller="AnswerController").col-sm-8
+    div.col-sm-8
       div
         H3 {{ question.title }}
         p.
@@ -45,4 +46,9 @@ block content
         h4 Code
         textarea(rows="3",ng-model="newAnswer.code", placeholder="Insert your code here").form-control
         br
-        button(type="submit").pull-right Add Answer
+        div.pull-right
+          div(ng-show='authData')
+            button(type="submit") Add Answer
+          div(ng-hide='authData')
+              button(ng-click="auth.$authWithOAuthPopup('github')").
+                Login with github to add a New Question
