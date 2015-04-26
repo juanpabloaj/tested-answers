@@ -5,12 +5,12 @@ block content
     div.col-sm-8
       form(ng-submit="submitQuestion()")
         h3 Question
-        textarea(rows="1",placeholder="Question title", ng-model="newQuestion.title").form-control
-        textarea(rows="3",placeholder="Question description", ng-model="newQuestion.body").form-control
+        textarea(rows="1",placeholder="Question title", ng-model="newQuestion.title", required).form-control
+        textarea(rows="3",placeholder="Question description", ng-model="newQuestion.body", required).form-control
         h4 Input code
         textarea(rows="3",ng-model="newQuestion.input").form-control
         h4 Expected output
-        textarea(rows="2",ng-model="newQuestion.expected").form-control
+        textarea(rows="2",ng-model="newQuestion.expected", required).form-control
         br
         div.row
           div.col-sm-2.

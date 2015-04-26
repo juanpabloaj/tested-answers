@@ -28,7 +28,7 @@ app
         $scope.questions.$add({
           title: $scope.newQuestion.title,
           body: $scope.newQuestion.body,
-          input: $scope.newQuestion.input,
+          input: $scope.newQuestion.input || '',
           expected: $scope.newQuestion.expected,
           language: $scope.newQuestion.language.name,
           createdAt: new Date().getTime(),
@@ -58,7 +58,7 @@ app
     $scope.addAnswer = function(){
       if ( $scope.authData) {
         $scope.answers.$add({
-          body:$scope.newAnswer.body,
+          body:$scope.newAnswer.body || '',
           code:$scope.newAnswer.code,
           question:questionId,
           state:'waiting',

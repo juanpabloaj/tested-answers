@@ -44,7 +44,7 @@ block content
       form(ng-submit="addAnswer()")
         textarea(rows="2",ng-model="newAnswer.body", placeholder="Answer description").form-control
         h4 Code
-        textarea(rows="3",ng-model="newAnswer.code", placeholder="Insert your code here").form-control
+        textarea(rows="3",ng-model="newAnswer.code", placeholder="Insert your code here", required).form-control
         br
         div.pull-right
           div(ng-show='authData')
