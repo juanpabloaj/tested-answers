@@ -1,0 +1,46 @@
+extends layout
+block content
+  div.row
+    input(type="hidden", value="#{question}")#questionId
+    div(ng-controller="AnswerController").col-sm-8
+      div
+        H3 {{ question.title }}
+        p.
+          {{question.body}}
+        H4 Input code
+        code.
+          {{question.input}}
+        H4 Expected output
+        code.
+          {{question.expected}}
+        p Language: {{ question.language }}
+      hr
+      h3 Answers
+      div(ng-repeat="answer in answers")
+        p {{answer.body}}
+        code {{answer.code}}
+        div(ng-if="answer.output")
+          h5 Output
+          code {{answer.output}}
+        div(ng-if="answer.error")
+          h5 Error
+          code {{answer.error}}
+        div
+          div(ng-if="answer.state == 'passed' ").text-success
+            div.pull-left State: {{answer.state}} 
+              span.glyphicon.glyphicon-ok
+          div(ng-if="answer.state == 'failed' ").text-danger
+            div.pull-left State: {{answer.state}} 
+              span.glyphicon.glyphicon-remove
+          div(ng-if="answer.state == 'waiting' ").text-warning
+            div.pull-left State: {{answer.state}} 
+              span.glyphicon.glyphicon-time
+          div.pull-right {{answer.author}}
+        hr
+      h4 New Answer
+      form(ng-submit="addAnswer()")
+        textarea(rows="2",ng-model="newAnswer.body").form-control
+        h4 Code
+        textarea(rows="3",ng-model="newAnswer.code", placeholder="Insert your code here").form-control
+        br
+        button(type="submit").pull-right Add Answer

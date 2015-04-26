@@ -1,0 +1,19 @@
+extends layout
+block content
+  div.row
+    div.col-sm-8
+      form(ng-submit="submitQuestion()", ng-controller="NewQuestion")
+        h3 Question
+        textarea(rows="1",placeholder="Title", ng-model="newQuestion.title").form-control
+        textarea(rows="3",ng-model="newQuestion.body").form-control
+        h4 Input code
+        textarea(rows="3",ng-model="newQuestion.input").form-control
+        h4 Expected output
+        textarea(rows="2",ng-model="newQuestion.expected").form-control
+        br
+        div.row
+          div.col-sm-2.
+            Language:
+          div.col-sm-3
+            select(ng-model="newQuestion.language", ng-options="lang.name for lang in languages").form-control
+          button(type='submit').pull-right New Question
