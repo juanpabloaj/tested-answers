@@ -1,4 +1,11 @@
-div(ng-show="authData")
-  button(ng-click="auth.$unauth()") Logout {{ authData.github.username }}
-div(ng-hide="authData")
-  button(ng-click="auth.$authWithOAuthPopup('github')") Login with github
+div
+  div.pull-left
+    a(href="/") All questions | 
+    a(href="/questions/new") Submit new question
+  div.pull-right
+    div(ng-show="authData") {{ authData.github.username }} 
+      button(ng-click="auth.$unauth()") Logout
+    div(ng-hide="authData")
+      button(ng-click="auth.$authWithOAuthPopup('github')") Login with github
+div.clearfix
+hr

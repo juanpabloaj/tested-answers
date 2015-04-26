@@ -1,8 +1,8 @@
 extends layout
 block content
   div(ng-controller="NewQuestion").row
-    include Login.jade
     div.col-sm-8
+      include ./login.jade
       form(ng-submit="submitQuestion()")
         h3 Question
         textarea(rows="1",placeholder="Question title", ng-model="newQuestion.title", required).form-control
