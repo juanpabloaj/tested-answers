@@ -4,8 +4,8 @@ block content
     div.col-sm-8
       form(ng-submit="submitQuestion()", ng-controller="NewQuestion")
         h3 Question
-        textarea(rows="1",placeholder="Title", ng-model="newQuestion.title").form-control
-        textarea(rows="3",ng-model="newQuestion.body").form-control
+        textarea(rows="1",placeholder="Question title", ng-model="newQuestion.title").form-control
+        textarea(rows="3",placeholder="Question description", ng-model="newQuestion.body").form-control
         h4 Input code
         textarea(rows="3",ng-model="newQuestion.input").form-control
         h4 Expected output

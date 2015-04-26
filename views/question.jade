@@ -13,7 +13,9 @@ block content
         H4 Expected output
         code.
           {{question.expected}}
-        p Language: {{ question.language }}
+        div
+          div.pull-left Language: {{ question.language }}
+          div.pull-right {{ question.createdAt | date:'medium' }} {{question.author}}
       hr
       h3 Answers
       div(ng-repeat="answer in answers")
@@ -35,11 +37,11 @@ block content
           div(ng-if="answer.state == 'waiting' ").text-warning
             div.pull-left State: {{answer.state}} 
               span.glyphicon.glyphicon-time
-          div.pull-right {{answer.author}}
+          div.pull-right {{ answer.createdAt | date:'medium' }} {{answer.author}}
         hr
       h4 New Answer
       form(ng-submit="addAnswer()")
-        textarea(rows="2",ng-model="newAnswer.body").form-control
+        textarea(rows="2",ng-model="newAnswer.body", placeholder="Answer description").form-control
         h4 Code
         textarea(rows="3",ng-model="newAnswer.code", placeholder="Insert your code here").form-control
         br

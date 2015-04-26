@@ -19,7 +19,8 @@ app
         body: $scope.newQuestion.body,
         input: $scope.newQuestion.input,
         expected: $scope.newQuestion.expected,
-        language: $scope.newQuestion.language.name
+        language: $scope.newQuestion.language.name,
+        createdAt: new Date().getTime()
       }).then(function(p){
         $window.location.href = "/questions/" + p.name();
       });
@@ -42,7 +43,8 @@ app
         body:$scope.newAnswer.body,
         code:$scope.newAnswer.code,
         question:questionId,
-        state:'waiting'
+        state:'waiting',
+        createdAt: new Date().getTime()
       });
     };
   });
