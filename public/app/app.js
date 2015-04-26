@@ -1,6 +1,7 @@
-var ref = new Firebase('https://unit-answers.firebaseio.com/');
-var answersRef = new Firebase('https://unit-answers.firebaseio.com/answers');
-var questionsRef = new Firebase('https://unit-answers.firebaseio.com/questions');
+var firebaseUrl = 'https://unit-answers.firebaseio.com/';
+var ref = new Firebase(firebaseUrl);
+var answersRef = ref.child('answers');
+var questionsRef = ref.child('questions');
 
 var app = angular.module('questionApp', ['firebase']);
 
