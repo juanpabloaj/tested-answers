@@ -33,12 +33,12 @@ site.route('/questions')
 site.route('/')
   .get(function(req, res){
     var questionId = req.params.questionId;
-    res.render('index');
+    res.redirect('/questions');
   });
 
 site.route('*')
   .get(function(req, res){
-    res.redirect('/');
+    res.redirect('/questions');
   });
 
 module.exports = site;
