@@ -10,9 +10,14 @@ app
       return $firebaseAuth(ref);
     }
   ])
-  .controller('QuestionsController', function($scope, $firebaseArray){
+  .controller('QuestionsController', function($scope, Auth, $firebaseArray){
     var query = questionsRef.orderByChild('createdAt').limitToLast(25);
     $scope.questions = $firebaseArray(query);
+
+    $scope.auth = Auth;
+    $scope.auth.$onAuth(function(authData){
+      $scope.authData = authData;
+    });
   })
   .controller('NewQuestion', function($scope, $window, Auth, $firebaseArray){
     $scope.languages = [{name:'javascript'}];
