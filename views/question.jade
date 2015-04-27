@@ -9,25 +9,31 @@ block content
         p.
           {{question.body}}
         H4 Input code
-        code.
-          {{question.input}}
+        pre
+          code.
+            {{question.input}}
         H4 Expected output
-        code.
-          {{question.expected}}
+        pre
+          code.
+            {{question.expected}}
         div
           div.pull-left Language: {{ question.language }}
           div.pull-right {{ question.createdAt | date:'medium' }} {{question.author}}
+        div.clearfix
       hr
       h3 Answers
       div(ng-repeat="answer in answers")
         p {{answer.body}}
-        code {{answer.code}}
+        pre
+          code {{answer.code}}
         div(ng-if="answer.output")
           h5 Output
-          code {{answer.output}}
+          pre
+            code {{answer.output}}
         div(ng-if="answer.error")
           h5 Error
-          code {{answer.error}}
+          pre
+            code {{answer.error}}
         div
           div(ng-if="answer.state == 'passed' ").text-success
             div.pull-left State: {{answer.state}} 
@@ -39,6 +45,7 @@ block content
             div.pull-left State: {{answer.state}} 
               span.glyphicon.glyphicon-time
           div.pull-right {{ answer.createdAt | date:'medium' }} {{answer.author}}
+        div.clearfix
         hr
       h4 New Answer
       form(ng-submit="addAnswer()")
