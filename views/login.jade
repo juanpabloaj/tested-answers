@@ -1,7 +1,8 @@
 div
   div.pull-left
     a(href="/") All questions | 
-    a(href="/questions/new") Submit new question
+    a(href="/questions/new") Submit new question | 
+    a(href="https://github.com/juanpabloaj/tested-answers/issues") Contact
   div.pull-right
     div(ng-show="authData") {{ authData.github.username }} 
       button(ng-click="auth.$unauth()") Logout
