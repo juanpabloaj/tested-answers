@@ -12,5 +12,9 @@ block content
       div(ng-repeat="question in questions| orderBy:'-createdAt'")
         hr
         div
-          a(href="/questions/{{ question.$id }}") {{ question.title }}
-          div.pull-right {{ question.createdAt | date:'medium' }} {{question.author}}
+          h4
+            a(href="/questions/{{ question.$id }}") {{ question.title }}
+          div
+            div.pull-left {{ question.language }}
+            div.pull-right {{ question.createdAt | date:'medium' }} {{question.author}}
+          div.clearfix
