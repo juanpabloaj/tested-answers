@@ -1,0 +1,12 @@
+language: node_js
+node_js:
+- '0.10'
+script:
+- npm test
+deploy:
+  provider: heroku
+  api_key:
+    secure: H+VMQGfdyrgJbooPmn2QbCOUV81gFSdRwTlj0r6Z5/yYCG0i1JNa8MO2RtU8VyCDq8jwUQt0cdx/p3EdGtWmAE0xNTypN4xI2YWtSJIsqRHMIATqp5J0HlfuQ918aDybR0UYUGKyRq0Rh42fNt/md+rAU2rVtGWZPY+81iPrrUg=
+  app: tested-answers
+  on:
+    repo: juanpabloaj/tested-answers
