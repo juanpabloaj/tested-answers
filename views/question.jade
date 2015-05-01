@@ -5,7 +5,7 @@ block content
     div.col-sm-8
       include ./login.jade
       div
-        H3 {{ question.title }}
+        H3 {{ question.title | capitalize }}
         p.
           {{question.body}}
         H4 Input code

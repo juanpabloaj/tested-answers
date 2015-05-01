@@ -10,6 +10,14 @@ app
       return $firebaseAuth(ref);
     }
   ])
+  .filter('capitalize', function(){
+    return function(input, scope){
+      if ( input ) {
+        input = input.toLowerCase();
+        return input.substring(0,1).toUpperCase() + input.substring(1);
+      }
+    };
+  })
   .controller('QuestionsController', function($scope, Auth, $firebaseArray){
     var query = questionsRef.orderByChild('createdAt').limitToLast(25);
     $scope.questions = $firebaseArray(query);
