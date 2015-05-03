@@ -2,7 +2,7 @@ extends layout
 block content
   div(ng-controller="AnswerController").row
     input(type="hidden", value="#{question}")#questionId
-    div.col-sm-8
+    .col-sm-8.col-sm-offset-1
       include ./login.jade
       div
         H3 {{ question.title | capitalize }}
