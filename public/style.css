@@ -1,6 +1,47 @@
+/* sticky footer */
+html {
+    position:relative;
+    min-height:100%;
+}
+
 body {
     padding-top:20px;
+    color:#727272;
+    margin-bottom:162px;
 }
+
+h1, h2, h3, h4, h5, h6 {
+    color:#212121;
+}
+
+a {
+    color:#9C27B0;
+}
+
+a:hover {
+    text-decoration:none;
+    color:#7B1FA2;
+}
+
+footer {
+    height: 92px;
+    position:absolute;
+    bottom:0px;
+    width:100%;
+    padding-top:20px;
+    color:#fff;
+    background-color:#7B1FA2;
+}
+
+footer a {
+    color:#E1BEE7;
+}
+
+footer a:hover {
+    color:#fff;
+    text-decoration:none;
+}
+
 .glyphicon-heart {
     color:#E91E63;
 }
