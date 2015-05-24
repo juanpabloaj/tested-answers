@@ -56,6 +56,15 @@ app
       }
     };
   })
+  .directive('ngPrism',['$interpolate', function ($interpolate) {
+    "use strict";
+    return {
+      restrict: 'E',
+      template: '<pre><code ng-transclude></code></pre>',
+      replace:true,
+      transclude:true
+    };
+  }])
   .controller('AnswerController', function($scope, Auth, $firebaseArray){
 
     var questionId = document.getElementById('questionId').getAttribute('value');
@@ -67,9 +76,15 @@ app
 
     questionsRef.child(questionId).on('value', function(snap){
       $scope.question = snap.val();
+      $scope.langClass = 'language-' + $scope.question.language.replace(/[0-9].*/,'');
 
       var query = answersRef.orderByChild('question').equalTo(snap.key());
       $scope.answers = $firebaseArray(query);
+      $scope.answers.$loaded(function(data){
+        setTimeout(function(){
+          Prism.highlightAll();
+        }, 200);
+      });
     });
 
     $scope.addAnswer = function(){

@@ -9,9 +9,7 @@ block content
         p.
           {{question.body}}
         H4 Input code
-        pre
-          code.
-            {{question.input}}
+        ng-prism(ng-class="langClass") {{question.input}}
         H4 Expected output
         pre
           code.
@@ -24,8 +22,7 @@ block content
       h3 Answers
       div(ng-repeat="answer in answers")
         p {{answer.body}}
-        pre
-          code {{answer.code}}
+        ng-prism(ng-class="langClass") {{answer.code}}
         div(ng-if="answer.output")
           h5 Output
           pre
