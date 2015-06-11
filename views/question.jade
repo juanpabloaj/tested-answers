@@ -16,7 +16,8 @@ block content
             {{question.expected}}
         div
           div.pull-left Language: {{ question.language }}
-          div.pull-right {{ question.createdAt | date:'medium' }} {{question.author}}
+          div.pull-right {{ question.createdAt | date:'medium' }} 
+             a(href='https://github.com/{{ question.author }}') {{question.author}}
         div.clearfix
       hr
       h3 Answers
@@ -41,7 +42,8 @@ block content
           div(ng-if="answer.state == 'waiting' ").text-warning
             div.pull-left State: {{answer.state}} 
               span.glyphicon.glyphicon-time
-          div.pull-right {{ answer.createdAt | date:'medium' }} {{answer.author}}
+          div.pull-right {{ question.createdAt | date:'medium' }} 
+             a(href='https://github.com/{{ answer.author }}') {{answer.author}}
         div.clearfix
         hr
       h4 New Answer

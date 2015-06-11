@@ -16,5 +16,6 @@ block content
             a(href="/questions/{{ question.$id }}") {{ question.title | capitalize }}
           div
             div.pull-left {{ question.language }}
-            div.pull-right {{ question.createdAt | date:'medium' }} {{question.author}}
+            div.pull-right {{ question.createdAt | date:'medium' }} 
+               a(href='https://github.com/{{ question.author }}') {{question.author}}
           div.clearfix
