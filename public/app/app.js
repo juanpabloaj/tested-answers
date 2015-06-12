@@ -38,8 +38,8 @@ app
     var query = questionsRef.orderByChild('createdAt').limitToLast(25);
     $scope.questions = $firebaseArray(query);
 
-    $scope.questions.$loaded(function(questions){
-      angular.forEach(questions, function(value, key){
+    $scope.questions.$loaded().then(function(){
+      angular.forEach($scope.questions, function(value, key){
         var ref = answersRef.orderByChild('question').equalTo(value.$id);
         var list = new CountState(ref);
         list.$loaded().then(function(){
@@ -109,7 +109,7 @@ app
 
       var query = answersRef.orderByChild('question').equalTo(snap.key());
       $scope.answers = $firebaseArray(query);
-      $scope.answers.$loaded(function(data){
+      $scope.answers.$loaded().then(function(){
         setTimeout(function(){
           Prism.highlightAll();
         }, 200);
