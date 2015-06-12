@@ -16,9 +16,9 @@ block content
             a(href="/questions/{{ question.$id }}") {{ question.title | capitalize }}
           div.row
             div.pull-left.col-sm-4 {{ question.language }}
-              span.text-success.col-xs-offset-1 {{ question.passed }}
+              span(ng-show="question.passed").text-success.col-xs-offset-1 {{ question.passed }}
                 span.glyphicon.glyphicon-ok
-              span.text-danger.col-xs-offset-1 {{ question.failed }}
+              span(ng-show="question.failed").text-danger.col-xs-offset-1 {{ question.failed }}
                 span.glyphicon.glyphicon-remove
             div.pull-right {{ question.createdAt | date:'medium' }} 
                a(href='https://github.com/{{ question.author }}') {{question.author}}

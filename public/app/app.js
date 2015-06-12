@@ -41,8 +41,9 @@ app
     $scope.questions.$loaded(function(questions){
       angular.forEach(questions, function(value, key){
         var ref = answersRef.orderByChild('question').equalTo(value.$id);
-        var list = new CountState(ref).$loaded(function(data){
-          var states = data.countStates();
+        var list = new CountState(ref);
+        list.$loaded().then(function(){
+          var states = list.countStates();
           value.failed = states.failed;
           value.passed = states.passed;
         });
