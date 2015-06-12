@@ -10,6 +10,23 @@ app
       return $firebaseAuth(ref);
     }
   ])
+  .factory('CountState', function($firebaseArray){
+    return $firebaseArray.$extend({
+      countStates: function(){
+        var numPassed = 0;
+        var numFailed = 0;
+        angular.forEach(this.$list, function(rec){
+          if ( rec.state === 'passed' ){
+            numPassed += 1;
+          }
+          if ( rec.state === 'failed' ){
+            numFailed += 1;
+          }
+        });
+        return {failed:numFailed, passed:numPassed};
+      }
+    });
+  })
   .filter('capitalize', function(){
     return function(input, scope){
       if ( input ) {
@@ -17,9 +34,20 @@ app
       }
     };
   })
-  .controller('QuestionsController', function($scope, Auth, $firebaseArray){
+  .controller('QuestionsController', function($scope, Auth, CountState, $firebaseArray){
     var query = questionsRef.orderByChild('createdAt').limitToLast(25);
     $scope.questions = $firebaseArray(query);
+
+    $scope.questions.$loaded(function(questions){
+      angular.forEach(questions, function(value, key){
+        var ref = answersRef.orderByChild('question').equalTo(value.$id);
+        var list = new CountState(ref).$loaded(function(data){
+          var states = data.countStates();
+          value.failed = states.failed;
+          value.passed = states.passed;
+        });
+      });
+    });
 
     $scope.auth = Auth;
     $scope.auth.$onAuth(function(authData){
