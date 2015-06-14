@@ -125,6 +125,9 @@ app
           state:'waiting',
           createdAt: new Date().getTime(),
           author: $scope.authData.github.username
+        }).then(function(){
+          $scope.newAnswer.body = '';
+          $scope.newAnswer.code = '';
         });
       }
     };
