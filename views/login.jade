@@ -4,9 +4,20 @@ div
     a(href="/questions/new") Submit new question | 
     a(href="https://github.com/juanpabloaj/tested-answers/issues") Contact
   div.pull-right
-    div(ng-show="authData") {{ authData.github.username }} 
-      button(ng-click="auth.$unauth()") Logout
+    div(ng-show="authData") 
+      div.dropdown.pull-left(ng-controller="InboxController")
+        button(type="button", data-toggle="dropdown", ng-class="{'btn-warning': unread}").btn.btn-default.dropdown-toggle
+          span.glyphicon.glyphicon-inbox
+        ul(role="menu").dropdown-menu
+          li(role="presentation", ng-repeat="message in messages", ng-mouseover="asRead(message)",ng-class="{'bg-warning': !message.read}").small
+            a(href="/questions/{{message.question}}#{{message.answer}}")
+              span Answer: 
+              span.text-primary {{message.questionTitle | capitalize }}
+          li(role="presentation", ng-hide="messages.length").small
+            a
+              span.text-primary Empty inbox ;)
+      button.btn.btn-default(ng-click="auth.$unauth()") {{ authData.github.username }} Logout
     div(ng-hide="authData")
-      button(ng-click="auth.$authWithOAuthPopup('github')") Login with github
+      button.btn.btn-default(ng-click="auth.$authWithOAuthPopup('github')") Login with github
 div.clearfix
 hr

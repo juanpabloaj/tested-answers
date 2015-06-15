@@ -2,6 +2,7 @@ var firebaseUrl = 'https://unit-answers.firebaseio.com/';
 var ref = new Firebase(firebaseUrl);
 var answersRef = ref.child('answers');
 var questionsRef = ref.child('questions');
+var messagesRef = ref.child('messages');
 
 var app = angular.module('questionApp', ['firebase']);
 
@@ -125,10 +126,69 @@ app
           state:'waiting',
           createdAt: new Date().getTime(),
           author: $scope.authData.github.username
-        }).then(function(){
+        }).then(function(ref){
           $scope.newAnswer.body = '';
           $scope.newAnswer.code = '';
+
+          var messages = $firebaseArray(messagesRef);
+          var newMessage = {
+            createdAt: new Date().getTime(),
+            question:questionId,
+            answer:ref.key(),
+            from:$scope.authData.github.username,
+            to:$scope.question.author,
+            read:false
+          };
+          messages.$add(newMessage);
         });
+
       }
     };
+  })
+  .controller('InboxController', function($scope, Auth, $firebaseArray){
+    $scope.auth = Auth;
+    $scope.auth.$onAuth(function(authData){
+      $scope.authData = authData;
+
+      if ( $scope.authData ) {
+
+        var query = messagesRef.orderByChild('to').equalTo(authData.github.username);
+
+        var messages = $firebaseArray(query);
+        messages.$watch(function(){
+          $scope.messages = messages;
+
+          var unread = false;
+
+          angular.forEach($scope.messages, function(message, key){
+            questionsRef.child(message.question).on('value', function(snap){
+              message.questionTitle = snap.val().title;
+            });
+
+            if ( ! message.read ) {
+              unread = true;
+            }
+          });
+
+          $scope.unread = unread;
+
+        });
+
+      }
+    });
+
+    $scope.asRead = function(message){
+
+      if ( ! message.read ) {
+
+        var messages = $firebaseArray(messagesRef);
+        messages.$loaded().then(function(){
+          var messageToSave = messages.$getRecord(message.$id);
+          messageToSave.read = true;
+          messages.$save(messageToSave);
+        });
+
+      }
+    };
+
   });
