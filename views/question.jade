@@ -21,7 +21,7 @@ block content
         div.clearfix
       hr
       h3 Answers
-      div(ng-repeat="answer in answers")
+      div(ng-repeat="answer in answers", id="{{answer.$id}}")
         p {{answer.body}}
         ng-prism(ng-class="langClass") {{answer.code}}
         div(ng-if="answer.output")
