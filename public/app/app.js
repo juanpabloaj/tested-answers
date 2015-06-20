@@ -4,6 +4,10 @@ var answersRef = ref.child('answers');
 var questionsRef = ref.child('questions');
 var messagesRef = ref.child('messages');
 
+function validId(id){
+  return ! Boolean(id.match(/\.|#|\$|\[|\]/));
+}
+
 var app = angular.module('questionApp', ['firebase']);
 
 app
@@ -98,6 +102,10 @@ app
   .controller('AnswerController', function($scope, $window, Auth, $firebaseArray){
 
     var questionId = document.getElementById('questionId').getAttribute('value');
+
+    if ( ! validId(questionId) ) {
+      $window.location.href = '/questions/new';
+    }
 
     questionsRef.child(questionId).on('value', function(snap){
       if ( snap.val() ) {
