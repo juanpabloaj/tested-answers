@@ -95,26 +95,31 @@ app
       transclude:true
     };
   }])
-  .controller('AnswerController', function($scope, Auth, $firebaseArray){
+  .controller('AnswerController', function($scope, $window, Auth, $firebaseArray){
 
     var questionId = document.getElementById('questionId').getAttribute('value');
 
-    $scope.auth = Auth;
-    $scope.auth.$onAuth(function(authData){
-      $scope.authData = authData;
-    });
-
     questionsRef.child(questionId).on('value', function(snap){
-      $scope.question = snap.val();
-      $scope.langClass = 'language-' + $scope.question.language.replace(/[0-9].*/,'');
+      if ( snap.val() ) {
+        $scope.auth = Auth;
 
-      var query = answersRef.orderByChild('question').equalTo(snap.key());
-      $scope.answers = $firebaseArray(query);
-      $scope.answers.$loaded().then(function(){
-        setTimeout(function(){
-          Prism.highlightAll();
-        }, 200);
-      });
+        $scope.auth.$onAuth(function(authData){
+          $scope.authData = authData;
+        });
+
+        $scope.question = snap.val();
+        $scope.langClass = 'language-' + $scope.question.language.replace(/[0-9].*/,'');
+
+        var query = answersRef.orderByChild('question').equalTo(snap.key());
+        $scope.answers = $firebaseArray(query);
+        $scope.answers.$loaded().then(function(){
+          setTimeout(function(){
+            Prism.highlightAll();
+          }, 200);
+        });
+      } else {
+        $window.location.href = "/questions/new";
+      }
     });
 
     $scope.addAnswer = function(){
