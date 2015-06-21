@@ -39,6 +39,9 @@ app
       }
     };
   })
+  .filter('urlEncode', function(){
+    return window.encodeURIComponent;
+  })
   .controller('QuestionsController', function($scope, Auth, CountState, $firebaseArray){
     var query = questionsRef.orderByChild('createdAt').limitToLast(25);
     $scope.questions = $firebaseArray(query);
@@ -120,7 +123,10 @@ app
 
         $scope.question = snap.val();
         $scope.question.$id = snap.key();
-        $scope.langClass = 'language-' + $scope.question.language.replace(/[0-9].*/,'');
+
+        var language = $scope.question.language.replace(/[0-9].*/,'');
+        $scope.langClass = 'language-' + language;
+        $scope.shareMessage = $scope.question.title + ' #' + language;
 
         var query = answersRef.orderByChild('question').equalTo(snap.key());
         $scope.answers = $firebaseArray(query);

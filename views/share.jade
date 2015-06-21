@@ -1,0 +1,7 @@
+ul.list-inline Share:
+  li
+    a(ng-href="http://twitter.com/share?url={{ 'http://testedanswers.com/questions/' + question.$id | urlEncode }}&text={{ shareMessage | capitalize | urlEncode}}", onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;")
+      i.fa.fa-twitter
+  li
+    a(ng-href="https://www.facebook.com/sharer/sharer.php?u={{ 'http://testedanswers.com/questions/' + question.$id | urlEncode }}&t={{ shareMessage | capitalize | urlEncode}}", onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;")
+      i.fa.fa-facebook-official

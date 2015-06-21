@@ -28,7 +28,11 @@ block content
               code.
                 {{question.expected}}
         div
-          div.pull-left Language: {{ question.language }}
+          div.pull-left
+            ul.list-inline
+              li Language: {{ question.language }}
+              li
+                include ./share.jade
           div.pull-right
             ul.list-inline
               li(ng-show='authData')
