@@ -16,8 +16,11 @@ block content
             {{question.expected}}
         div
           div.pull-left Language: {{ question.language }}
-          div.pull-right {{ question.createdAt | date:'medium' }} 
-             a(href='https://github.com/{{ question.author }}') {{question.author}}
+          div.pull-right
+            ul.list-inline
+              li {{ question.createdAt | date:'medium' }}
+              li
+                a(href='https://github.com/{{ question.author }}') {{question.author}}
         div.clearfix
       hr
       h3 Answers
