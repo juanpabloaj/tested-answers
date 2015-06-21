@@ -5,19 +5,39 @@ block content
     .col-sm-8.col-sm-offset-1
       include ./login.jade
       div
-        H3 {{ question.title | capitalize }}
-        p.
-          {{question.body}}
-        H4 Input code
-        ng-prism(ng-class="langClass") {{question.input}}
-        H4 Expected output
-        pre
-          code.
-            {{question.expected}}
+        div(ng-hide='editable && authData')
+          H3 {{ question.title | capitalize }}
+          p.
+            {{question.body}}
+          H4 Input code
+          ng-prism(ng-class="langClass") {{question.input}}
+          H4 Expected output
+          pre
+            code.
+              {{question.expected}}
+        div(ng-show='editable && authData')
+          form
+            textarea(rows="1",ng-model="question.title", required).form-control
+            textarea(rows="3", ng-model="question.body", required).form-control
+            h4 Input code
+            textarea(rows="3",ng-hide='answers.length', ng-model="question.input").form-control
+            ng-prism(ng-class="langClass", ng-show='answers.length') {{question.input}}
+            h4 Expected output
+            textarea(rows="2",ng-hide='answers.length', ng-model="question.expected", required).form-control
+            pre(ng-show='answers.length')
+              code.
+                {{question.expected}}
         div
           div.pull-left Language: {{ question.language }}
           div.pull-right
             ul.list-inline
+              li(ng-show='authData')
+                ul.list-inline(ng-show='question.author===username')
+                  li
+                    a(href='', ng-click='editQuestion(question)', ng-hide='editable')
+                      span Edit
+                    a(href='', ng-click='saveQuestion(question)', ng-show='editable')
+                      span Save Edit
               li {{ question.createdAt | date:'medium' }}
               li
                 a(href='https://github.com/{{ question.author }}') {{question.author}}

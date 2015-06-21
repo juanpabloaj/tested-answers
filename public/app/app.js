@@ -113,9 +113,13 @@ app
 
         $scope.auth.$onAuth(function(authData){
           $scope.authData = authData;
+          if (authData) {
+            $scope.username = authData.github.username;
+          }
         });
 
         $scope.question = snap.val();
+        $scope.question.$id = snap.key();
         $scope.langClass = 'language-' + $scope.question.language.replace(/[0-9].*/,'');
 
         var query = answersRef.orderByChild('question').equalTo(snap.key());
@@ -129,6 +133,28 @@ app
         $window.location.href = "/questions/new";
       }
     });
+
+    $scope.editQuestion = function(question) {
+      $scope.editable = true;
+    };
+
+    $scope.saveQuestion = function(question) {
+
+      if ( $scope.authData) {
+        var questions = $firebaseArray(questionsRef);
+        questions.$loaded().then(function(){
+          var questionToSave = questions.$getRecord(question.$id);
+          questionToSave.title = $scope.question.title;
+          questionToSave.body = $scope.question.body;
+          questionToSave.input = $scope.question.input;
+          questionToSave.expected = $scope.question.expected;
+          questionToSave.editedAt = new Date().getTime();
+          questions.$save(questionToSave);
+          $scope.editable = false;
+        });
+      }
+
+    };
 
     $scope.addAnswer = function(){
       if ( $scope.authData) {
