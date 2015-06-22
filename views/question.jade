@@ -73,7 +73,7 @@ block content
           div(ng-if="answer.state == 'waiting' ").text-warning
             div.pull-left State: {{answer.state}} 
               span.glyphicon.glyphicon-time
-          div.pull-right {{ question.createdAt | date:'medium' }} 
+          div.pull-right {{ answer.createdAt | date:'medium' }} 
              a(href='https://github.com/{{ answer.author }}') {{answer.author}}
         div.clearfix
         hr
