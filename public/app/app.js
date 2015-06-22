@@ -142,6 +142,11 @@ app
 
     $scope.editQuestion = function(question) {
       $scope.editable = true;
+      $scope.toSaveQuestion = {};
+      $scope.toSaveQuestion.title = $scope.question.title;
+      $scope.toSaveQuestion.body = $scope.question.body;
+      $scope.toSaveQuestion.input = $scope.question.input;
+      $scope.toSaveQuestion.expected = $scope.question.expected;
     };
 
     $scope.saveQuestion = function(question) {
@@ -150,16 +155,22 @@ app
         var questions = $firebaseArray(questionsRef);
         questions.$loaded().then(function(){
           var questionToSave = questions.$getRecord(question.$id);
-          questionToSave.title = $scope.question.title;
-          questionToSave.body = $scope.question.body;
-          questionToSave.input = $scope.question.input;
-          questionToSave.expected = $scope.question.expected;
+          questionToSave.title = $scope.toSaveQuestion.title;
+          questionToSave.body = $scope.toSaveQuestion.body;
+          questionToSave.input = $scope.toSaveQuestion.input;
+          questionToSave.expected = $scope.toSaveQuestion.expected;
           questionToSave.editedAt = new Date().getTime();
           questions.$save(questionToSave);
           $scope.editable = false;
         });
       }
 
+    };
+
+    $scope.cancelEdit = function(question) {
+      if ( $scope.authData) {
+        $scope.editable = false;
+      }
     };
 
     $scope.addAnswer = function(){

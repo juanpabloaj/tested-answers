@@ -17,13 +17,13 @@ block content
               {{question.expected}}
         div(ng-show='editable && authData')
           form
-            textarea(rows="1",ng-model="question.title", required).form-control
-            textarea(rows="3", ng-model="question.body", required).form-control
+            textarea(rows="1",ng-model="toSaveQuestion.title", required).form-control
+            textarea(rows="3", ng-model="toSaveQuestion.body", required).form-control
             h4 Input code
-            textarea(rows="3",ng-hide='answers.length', ng-model="question.input").form-control
+            textarea(rows="3",ng-hide='answers.length', ng-model="toSaveQuestion.input").form-control
             ng-prism(ng-class="langClass", ng-show='answers.length') {{question.input}}
             h4 Expected output
-            textarea(rows="2",ng-hide='answers.length', ng-model="question.expected", required).form-control
+            textarea(rows="2",ng-hide='answers.length', ng-model="toSaveQuestion.expected", required).form-control
             pre(ng-show='answers.length')
               code.
                 {{question.expected}}
@@ -37,11 +37,15 @@ block content
             ul.list-inline
               li(ng-show='authData')
                 ul.list-inline(ng-show='question.author===username')
-                  li
-                    a(href='', ng-click='editQuestion(question)', ng-hide='editable')
+                  li(ng-hide='editable')
+                    a(href='', ng-click='editQuestion(question)')
                       span Edit
-                    a(href='', ng-click='saveQuestion(question)', ng-show='editable')
-                      span Save Edit
+                  li(ng-show='editable')
+                    a(href='', ng-click='saveQuestion(question)')
+                      span Save
+                  li(ng-show='editable')
+                    a(href='', ng-click='cancelEdit(question)')
+                      span Cancel
               li {{ question.createdAt | date:'medium' }}
               li
                 a(href='https://github.com/{{ question.author }}') {{question.author}}
