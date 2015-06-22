@@ -160,8 +160,13 @@ app
           questionToSave.input = $scope.toSaveQuestion.input;
           questionToSave.expected = $scope.toSaveQuestion.expected;
           questionToSave.editedAt = new Date().getTime();
-          questions.$save(questionToSave);
-          $scope.editable = false;
+          questions.$save(questionToSave).then(function(ref){
+            $scope.question.title = $scope.toSaveQuestion.title;
+            $scope.question.body = $scope.toSaveQuestion.body;
+            $scope.question.input = $scope.toSaveQuestion.input;
+            $scope.question.expected = $scope.toSaveQuestion.expected;
+            $scope.editable = false;
+          });
         });
       }
 
