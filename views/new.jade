@@ -19,7 +19,7 @@ block content
             select(ng-model="newQuestion.language", ng-options="lang.name for lang in languages").form-control
           div.pull-right
             div(ng-show='authData')
-              button(type='submit') New Question
+              button(type='submit').btn.btn-default New Question
             div(ng-hide='authData')
-              button(ng-click="auth.$authWithOAuthPopup('github')").
+              button(ng-click="auth.$authWithOAuthPopup('github')").btn.btn-default.
                 Login with github to add a New Question
