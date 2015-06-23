@@ -1,0 +1,20 @@
+{
+  "name": "tested-answers",
+  "version": "0.1.0",
+  "homepage": "https://github.com/juanpabloaj/tested-answers",
+  "authors": [
+    "JuanPablo <jpabloaj@gmail.com>"
+  ],
+  "description": "post programming question and get the output of code answers",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "markdown": "~0.5.0"
+  }
+}

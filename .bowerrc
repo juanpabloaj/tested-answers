@@ -1,0 +1,5 @@
+{
+  "scripts": {
+    "postinstall": "mkdir -p public/js ; cp bower_components/markdown/lib/markdown.js public/js"
+  }
+}

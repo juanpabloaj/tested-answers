@@ -3,6 +3,7 @@ block header-extras
     link(rel="stylesheet", href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css")
     link(rel="stylesheet", href="/prism.css")
     script(src="/prism.js")
+    script(src="/js/markdown.js")
 block content
   div(ng-controller="AnswerController").row
     input(type="hidden", value="#{question}")#questionId
@@ -11,8 +12,7 @@ block content
       div
         div(ng-hide='editable && authData')
           H3 {{ question.title | capitalize }}
-          p.
-            {{question.body}}
+          p(ng-bind-html="markdown") {{ markdown }}
           H4 Input code
           ng-prism(ng-class="langClass") {{question.input}}
           H4 Expected output

@@ -28,3 +28,6 @@ node_modules
 
 # bower
 bower_components
+
+# js
+public/js
