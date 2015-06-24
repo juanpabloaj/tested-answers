@@ -102,6 +102,18 @@ app
       transclude:true
     };
   }])
+  .directive('ngMarkdown', function($compile){
+    return {
+      link: function(scope, ele, attrs){
+        scope.$watch(attrs.ngMarkdown, function(md){
+          if (md){
+            ele.html(markdown.toHTML(md));
+            $compile(ele.contents())(scope);
+          }
+        });
+      }
+    };
+  })
   .controller('AnswerController', function($scope, $window, $sce, Auth, $firebaseArray){
 
     var questionId = document.getElementById('questionId').getAttribute('value');

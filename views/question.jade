@@ -22,8 +22,13 @@ block content
               {{question.expected}}
         div(ng-show='editable && authData')
           form
-            textarea(rows="1",ng-model="toSaveQuestion.title", required).form-control
-            textarea(rows="3", ng-model="toSaveQuestion.body", required).form-control
+            div.form-group
+              textarea(rows="1",ng-model="toSaveQuestion.title", required).form-control
+            div.form-group
+              textarea(rows="3", ng-model="toSaveQuestion.body", required).form-control
+            hr
+            div.bs-callout
+              div(ng-markdown="toSaveQuestion.body")
             h4 Input code
             textarea(rows="3",ng-hide='answers.length', ng-model="toSaveQuestion.input").form-control
             ng-prism(ng-class="langClass", ng-show='answers.length') {{question.input}}
