@@ -13,7 +13,7 @@ block content
       div
         div(ng-hide='editable && authData')
           H3 {{ question.title | capitalize }}
-          p(ng-bind-html="markdown") {{ markdown }}
+          p(ng-markdown="question.body")
           H4 Input code
           ng-prism(ng-class="langClass") {{question.input}}
           H4 Expected output

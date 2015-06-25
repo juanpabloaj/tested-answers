@@ -114,7 +114,7 @@ app
       }
     };
   })
-  .controller('AnswerController', function($scope, $window, $sce, Auth, $firebaseArray){
+  .controller('AnswerController', function($scope, $window, Auth, $firebaseArray){
 
     var questionId = document.getElementById('questionId').getAttribute('value');
 
@@ -135,8 +135,6 @@ app
 
         $scope.question = snap.val();
         $scope.question.$id = snap.key();
-
-        $scope.markdown = $sce.trustAsHtml(markdown.toHTML($scope.question.body));
 
         var language = $scope.question.language.replace(/[0-9].*/,'');
         $scope.langClass = 'language-' + language;
