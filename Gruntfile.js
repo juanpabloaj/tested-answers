@@ -9,6 +9,7 @@ module.exports = function(grunt) {
           'markdown.js': 'markdown/lib/markdown.js',
           'prism.js': 'prism/prism.js',
           'prism-python.min.js': 'prism/components/prism-python.min.js',
+          'prism-elixir.min.js': 'prism/components/prism-elixir.min.js'
         }
       },
       css:{

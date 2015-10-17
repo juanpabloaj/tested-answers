@@ -16,6 +16,6 @@
   ],
   "dependencies": {
     "markdown": "~0.5.0",
-    "prism": "~1.0.0"
+    "prism": "~1.2.0"
   }
 }

@@ -64,7 +64,9 @@ app
     });
   })
   .controller('NewQuestion', function($scope, $window, Auth, $firebaseArray){
-    $scope.languages = [{name:'javascript'}, {name:'python2.7'}];
+    $scope.languages = [
+      {name:'javascript'}, {name:'python2.7'}, {name: 'elixir'}
+    ];
 
     $scope.newQuestion = {
       language:$scope.languages[0]
