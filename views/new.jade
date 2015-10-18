@@ -17,9 +17,9 @@ block content
             h6.text-muted Markdown preview
             div(ng-markdown="newQuestion.body")
         h4 Input code
-        textarea(rows="4",ng-model="newQuestion.input").form-control
+        textarea(rows="4", placeholder="Input code to use in the answer, variables definitions, imported libraries, etc", ng-model="newQuestion.input").form-control
         h4 Expected output
-        textarea(rows="2",ng-model="newQuestion.expected", required).form-control
+        textarea(rows="2", placeholder="The expected output of the code answers", ng-model="newQuestion.expected", required).form-control
         br
         div.row
           div.col-sm-2.
