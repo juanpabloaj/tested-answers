@@ -1,3 +1,4 @@
+/*jshint strict: false */
 var firebaseUrl = 'https://unit-answers.firebaseio.com/';
 var ref = new Firebase(firebaseUrl);
 var answersRef = ref.child('answers');
@@ -42,20 +43,46 @@ app
   .filter('urlEncode', function(){
     return window.encodeURIComponent;
   })
-  .controller('QuestionsController', function($scope, Auth, CountState, $firebaseArray){
-    var query = questionsRef.orderByChild('createdAt').limitToLast(25);
-    $scope.questions = $firebaseArray(query);
+  .factory('$pageArray', function($firebaseArray, CountState){
+    return function(ref, field){
+      var pageRef = new Firebase.util.Paginate(ref, field, {maxCachesize: 250});
+
+      var list = $firebaseArray(pageRef);
+      list.page = pageRef.page;
+
+      pageRef.page.onPageCount(function(currentPageCount, couldHaveMore){
+        list.pageCount = currentPageCount;
+        list.couldHaveMore = couldHaveMore;
+      });
+
+      pageRef.page.onPageChange(function(currentPageNumber){
+        list.currentPageNumber = currentPageNumber;
+
+        setTimeout(function(){
+          angular.forEach(list, function(value, key){
+            var ref = answersRef.orderByChild('question').equalTo(value.$id);
+            var listQuestion = new CountState(ref);
+            listQuestion.$watch(function(){
+              var states = listQuestion.countStates();
+              value.failed = states.failed;
+              value.passed = states.passed;
+            });
+          });
+        }, 800);
+
+      });
+
+      // load the first page
+      pageRef.page.next();
+
+      return list;
+    };
+  })
+  .controller('QuestionsController', function($scope, Auth, CountState, $pageArray){
+    $scope.questions = $pageArray(questionsRef, 'createdAt');
 
     $scope.questions.$loaded().then(function(){
-      angular.forEach($scope.questions, function(value, key){
-        var ref = answersRef.orderByChild('question').equalTo(value.$id);
-        var list = new CountState(ref);
-        list.$watch(function(){
-          var states = list.countStates();
-          value.failed = states.failed;
-          value.passed = states.passed;
-        });
-      });
+      $scope.questions.page.setPage($scope.questions.page.pageCount);
     });
 
     $scope.auth = Auth;

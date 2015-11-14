@@ -34,3 +34,21 @@ block content
             div.pull-right {{ question.createdAt | date:'medium' }} 
                a(href='https://github.com/{{ question.author }}') {{question.author}}
           div.clearfix
+
+      hr
+      br
+      div.text-center(ng-show="questions.pageCount")
+        ul.list-inline
+          li
+            button.btn.btn-default(ng-click="questions.page.setPage(questions.pageCount)", ng-disabled="!questions.page.hasNext() || questions.currentPageNumber >= questions.pageCount")
+              i.glyphicon.glyphicon-fast-backward
+          li
+            button.btn.btn-default(ng-click="questions.page.next()", ng-disabled="!questions.page.hasNext()")
+              i.glyphicon.glyphicon-backward
+          li {{ questions.pageCount - questions.currentPageNumber + 1}} of {{ questions.pageCount }}
+          li
+            button.btn.btn-default(ng-click="questions.page.prev()", ng-disabled="!questions.page.hasPrev()")
+              i.glyphicon.glyphicon-forward
+          li
+            button.btn.btn-default(ng-click="questions.page.setPage(1)", ng-disabled="questions.currentPageNumber < 2")
+              i.glyphicon.glyphicon-fast-forward
