@@ -227,7 +227,9 @@ app
 
       if ( $scope.authData ) {
 
-        var query = messagesRef.orderByChild('to').equalTo(authData.github.username);
+        var query = messagesRef.orderByChild('to')
+          .equalTo(authData.github.username)
+          .limitToLast(20);
 
         var messages = $firebaseArray(query);
         messages.$watch(function(){
