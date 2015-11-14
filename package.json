@@ -7,6 +7,9 @@
     "test": "mocha && ./node_modules/.bin/karma start --single-run --browsers PhantomJS",
     "postinstall": "grunt bowercopy"
   },
+  "engines":{
+    "node": "0.12.7"
+  },
   "author": "juanpabloaj",
   "license": "MIT",
   "dependencies": {
