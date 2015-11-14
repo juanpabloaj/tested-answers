@@ -9,19 +9,9 @@ function validId(id){
   return ! Boolean(id.match(/\.|#|\$|\[|\]/));
 }
 
-var app = angular.module('questionApp', ['firebase']);
+var app = angular.module('questionApp', ['firebase', 'app.filters']);
 
 app
-  .filter('capitalize', function(){
-    return function(input, scope){
-      if ( input ) {
-        return input.substring(0,1).toUpperCase() + input.substring(1);
-      }
-    };
-  })
-  .filter('urlEncode', function(){
-    return window.encodeURIComponent;
-  })
   .factory('Auth', ['$firebaseAuth', function($firebaseAuth) {
       return $firebaseAuth(ref);
     }
