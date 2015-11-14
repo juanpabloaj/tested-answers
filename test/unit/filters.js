@@ -13,4 +13,10 @@ describe('filters', function(){
     expect(capitalize('hello world')).toEqual('Hello world');
   });
 
+  it('urlEncode', function(){
+    var urlEncode = $filter('urlEncode');
+
+    expect(urlEncode('hello world')).toEqual('hello%20world');
+  });
+
 });
