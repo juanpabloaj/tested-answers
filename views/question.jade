@@ -57,7 +57,7 @@ block content
                   li(ng-show='editable')
                     a(href='', ng-click='cancelEdit(question)')
                       span Cancel
-              li {{ question.createdAt | date:'medium' }}
+              li {{ -1 * question.createdAt | date:'medium' }}
               li
                 a(href='https://github.com/{{ question.author }}') {{question.author}}
         div.clearfix
