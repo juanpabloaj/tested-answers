@@ -9,7 +9,7 @@ function validId(id){
   return ! Boolean(id.match(/\.|#|\$|\[|\]/));
 }
 
-var app = angular.module('questionApp', ['firebase', 'app.filters']);
+var app = angular.module('questionApp', ['firebase', 'app.filters', 'app.directives']);
 
 app
   .factory('Auth', ['$firebaseAuth', function($firebaseAuth) {
@@ -112,27 +112,6 @@ app
           author: $scope.authData.github.username
         }).then(function(p){
           $window.location.href = "/questions/" + p.name();
-        });
-      }
-    };
-  })
-  .directive('ngPrism',['$interpolate', function ($interpolate) {
-    "use strict";
-    return {
-      restrict: 'E',
-      template: '<pre><code ng-transclude></code></pre>',
-      replace:true,
-      transclude:true
-    };
-  }])
-  .directive('ngMarkdown', function($compile){
-    return {
-      link: function(scope, ele, attrs){
-        scope.$watch(attrs.ngMarkdown, function(md){
-          if (md){
-            ele.html(markdown.toHTML(md));
-            $compile(ele.contents())(scope);
-          }
         });
       }
     };
