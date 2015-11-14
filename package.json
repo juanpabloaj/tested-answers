@@ -4,8 +4,11 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "mocha",
+    "test": "mocha && ./node_modules/.bin/karma start --single-run --browsers PhantomJS",
     "postinstall": "grunt bowercopy"
+  },
+  "engines":{
+    "node": "0.12.7"
   },
   "author": "juanpabloaj",
   "license": "MIT",
@@ -18,6 +21,11 @@
     "jade": "^1.9.2"
   },
   "devDependencies": {
-    "mocha": "^2.2.4"
+    "jasmine-core": "^2.3.4",
+    "karma": "^0.13.15",
+    "karma-jasmine": "^0.3.6",
+    "karma-phantomjs-launcher": "^0.2.1",
+    "mocha": "^2.2.4",
+    "phantomjs": "^1.9.18"
   }
 }
