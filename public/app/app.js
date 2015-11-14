@@ -1,3 +1,4 @@
+/*jshint strict: false */
 var firebaseUrl = 'https://unit-answers.firebaseio.com/';
 var ref = new Firebase(firebaseUrl);
 var answersRef = ref.child('answers');
@@ -11,6 +12,16 @@ function validId(id){
 var app = angular.module('questionApp', ['firebase']);
 
 app
+  .filter('capitalize', function(){
+    return function(input, scope){
+      if ( input ) {
+        return input.substring(0,1).toUpperCase() + input.substring(1);
+      }
+    };
+  })
+  .filter('urlEncode', function(){
+    return window.encodeURIComponent;
+  })
   .factory('Auth', ['$firebaseAuth', function($firebaseAuth) {
       return $firebaseAuth(ref);
     }
@@ -32,30 +43,50 @@ app
       }
     });
   })
-  .filter('capitalize', function(){
-    return function(input, scope){
-      if ( input ) {
-        return input.substring(0,1).toUpperCase() + input.substring(1);
-      }
+  .factory('UpdateQuestions', function(CountState){
+    return function(questions){
+      setTimeout(function(){
+        angular.forEach(questions, function(value, key){
+          var ref = answersRef.orderByChild('question').equalTo(value.$id);
+          var listQuestion = new CountState(ref);
+          listQuestion.$watch(function(){
+            var states = listQuestion.countStates();
+            value.failed = states.failed;
+            value.passed = states.passed;
+          });
+        });
+      }, 1000);
     };
   })
-  .filter('urlEncode', function(){
-    return window.encodeURIComponent;
-  })
-  .controller('QuestionsController', function($scope, Auth, CountState, $firebaseArray){
-    var query = questionsRef.orderByChild('createdAt').limitToLast(25);
-    $scope.questions = $firebaseArray(query);
+  .factory('$pageArray', function($firebaseArray, UpdateQuestions){
+    return function(ref, field){
+      var pageRef = new Firebase.util.Paginate(ref, field, {maxCachesize: 250});
 
-    $scope.questions.$loaded().then(function(){
-      angular.forEach($scope.questions, function(value, key){
-        var ref = answersRef.orderByChild('question').equalTo(value.$id);
-        var list = new CountState(ref);
-        list.$watch(function(){
-          var states = list.countStates();
-          value.failed = states.failed;
-          value.passed = states.passed;
-        });
+      var list = $firebaseArray(pageRef);
+      list.page = pageRef.page;
+
+      pageRef.page.onPageCount(function(currentPageCount, couldHaveMore){
+        list.pageCount = currentPageCount;
+        list.couldHaveMore = couldHaveMore;
       });
+
+      pageRef.page.onPageChange(function(currentPageNumber){
+        list.currentPageNumber = currentPageNumber;
+
+        UpdateQuestions(list);
+      });
+
+      // load the first page
+      pageRef.page.next();
+
+      return list;
+    };
+  })
+  .controller('QuestionsController', function($scope, Auth, UpdateQuestions, $pageArray){
+    $scope.questions = $pageArray(questionsRef, 'createdAt');
+
+    $scope.questions.$loaded(function(){
+      UpdateQuestions($scope.questions);
     });
 
     $scope.auth = Auth;
@@ -87,7 +118,7 @@ app
           input: $scope.newQuestion.input || '',
           expected: $scope.newQuestion.expected,
           language: $scope.newQuestion.language.name,
-          createdAt: new Date().getTime(),
+          createdAt: -1 * new Date().getTime(),
           author: $scope.authData.github.username
         }).then(function(p){
           $window.location.href = "/questions/" + p.name();
@@ -173,7 +204,7 @@ app
           questionToSave.body = $scope.toSaveQuestion.body;
           questionToSave.input = $scope.toSaveQuestion.input;
           questionToSave.expected = $scope.toSaveQuestion.expected;
-          questionToSave.editedAt = new Date().getTime();
+          questionToSave.editedAt = -1 * new Date().getTime();
           questions.$save(questionToSave).then(function(ref){
             $scope.question.title = $scope.toSaveQuestion.title;
             $scope.question.body = $scope.toSaveQuestion.body;
